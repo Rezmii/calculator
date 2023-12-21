@@ -1,6 +1,14 @@
 let num1, num2;
 let operator;
 
+const numberButtons = document.querySelectorAll(".number-button");
+numberButtons.forEach((numberButton) => {
+  numberButton.addEventListener("click", (e) => {
+    let buttonValue = e.target.innerHTML;
+    displayOnScreen(buttonValue);
+  });
+});
+
 function addNumbers(num1, num2) {
   return (result = num1 + num2);
 }
@@ -38,4 +46,9 @@ function chooseOperation(num1, num2, operator) {
   return result;
 }
 
-console.log(chooseOperation(3, 5, "+"));
+function displayOnScreen(displayValue) {
+  const currentResultDiv = document.querySelector(".current-result");
+  currentResultDiv.innerHTML = displayValue;
+}
+
+//console.log(chooseOperation(3, 5, "+"));

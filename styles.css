@@ -16,6 +16,7 @@ button {
   border-radius: 10px;
   border: 1px solid black;
   border-radius: 10px;
+  cursor: pointer;
 }
 
 main {
