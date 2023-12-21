@@ -1,12 +1,31 @@
-let num1, num2;
 let operator;
+let currentDisp1, currentDisp2;
 
 const numberButtons = document.querySelectorAll(".number-button");
 numberButtons.forEach((numberButton) => {
   numberButton.addEventListener("click", (e) => {
-    let buttonValue = e.target.innerHTML;
-    displayOnScreen(buttonValue);
+    if (!currentDisp1 && !currentDisp2) {
+      currentDisp1 = parseFloat(e.target.innerHTML);
+      displayOnScreen(currentDisp1);
+    } else if (currentDisp1 && !currentDisp2) {
+      currentDisp2 = parseFloat(e.target.innerHTML);
+      displayOnScreen(currentDisp2);
+    }
+    console.log(`curr1: ${currentDisp1}, curr2: ${currentDisp2}`);
   });
+});
+
+const operationButtons = document.querySelectorAll(".operation-button");
+operationButtons.forEach((operationButton) => {
+  operationButton.addEventListener("click", (e) => {
+    operator = e.target.innerHTML;
+    displayOnScreen(operator);
+  });
+});
+
+const resultButton = document.querySelector(".result-button");
+resultButton.addEventListener("click", () => {
+  chooseOperation(currentDisp1, currentDisp2, operator);
 });
 
 function addNumbers(num1, num2) {
@@ -32,7 +51,7 @@ function chooseOperation(num1, num2, operator) {
     case "-":
       result = subtractNumbers(num1, num2);
       break;
-    case "*":
+    case "x":
       result = multiplyNumbers(num1, num2);
       break;
     case "/":
@@ -43,12 +62,16 @@ function chooseOperation(num1, num2, operator) {
       break;
   }
 
-  return result;
+  currentDisp1 = result;
+  displayOnScreen(currentDisp1);
+  currentDisp2 = undefined;
+  console.log(`curr1: ${currentDisp1}, curr2: ${currentDisp2}`);
 }
 
 function displayOnScreen(displayValue) {
   const currentResultDiv = document.querySelector(".current-result");
-  currentResultDiv.innerHTML = displayValue;
+  let html = ` ${displayValue} `;
+  currentResultDiv.innerHTML = html;
 }
 
 //console.log(chooseOperation(3, 5, "+"));
