@@ -136,3 +136,31 @@ function clearEverything() {
   currentDisp2 = null;
   displayValue = null;
 }
+
+const deleteButton = document.querySelector(".control-button2");
+deleteButton.addEventListener("click", () => {
+  let newString;
+  if (currentDisp1 && !currentDisp2) {
+    newString = deleteDigit(currentDisp1);
+    currentDisp1 = newString;
+    console.log(currentDisp1);
+  } else if (currentDisp1 && currentDisp2) {
+    newString = deleteDigit(currentDisp2);
+    currentDisp2 = newString;
+  }
+});
+
+function deleteDigit(num) {
+  let numToString = String(num);
+  let lengthOfNum = numToString.length;
+  let newString = "";
+  if (lengthOfNum > 0) {
+    newString = parseFloat(numToString.slice(0, -1));
+    if (isNaN(newString)) {
+      newString = parseFloat(newString);
+      newString = 0;
+    }
+    displayOnScreen(newString);
+    return newString;
+  }
+}
