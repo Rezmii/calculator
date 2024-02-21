@@ -2,7 +2,7 @@ let operator;
 let currentDisp1, currentDisp2;
 let displayValue;
 let dot = false;
-
+//delete button i keyboards support
 const dotButton = document.querySelector(".dot-button");
 dotButton.addEventListener("click", () => {
   let checkCurrentDisp1;
@@ -49,12 +49,14 @@ numberButtons.forEach((numberButton) => {
 const operationButtons = document.querySelectorAll(".operation-button");
 operationButtons.forEach((operationButton) => {
   operationButton.addEventListener("click", (e) => {
-    if (operator && currentDisp1 && currentDisp2) {
-      chooseOperation(currentDisp1, currentDisp2, operator);
-      operator = e.target.innerHTML;
-    } else {
-      operator = e.target.innerHTML;
-      displayOnScreen(operator);
+    if (currentDisp1) {
+      if (operator && currentDisp1 && currentDisp2) {
+        chooseOperation(currentDisp1, currentDisp2, operator);
+        operator = e.target.innerHTML;
+      } else {
+        operator = e.target.innerHTML;
+        displayOnScreen(operator);
+      }
     }
   });
 });
@@ -81,33 +83,34 @@ function divideNumbers(num1, num2) {
 function chooseOperation(num1, num2, operator) {
   let result;
   let msg;
-  switch (operator) {
-    case "+":
-      result = addNumbers(num1, num2);
-      break;
-    case "-":
-      result = subtractNumbers(num1, num2);
-      break;
-    case "x":
-      result = multiplyNumbers(num1, num2);
-      break;
-    case "/":
-      if (typeof divideNumbers(num1, num2) === "string")
-        msg = divideNumbers(num1, num2);
-      else result = divideNumbers(num1, num2);
-      break;
-    default:
-      msg = "There is no such operator";
-      break;
-  }
+  if (currentDisp2) {
+    switch (operator) {
+      case "+":
+        result = addNumbers(num1, num2);
+        break;
+      case "-":
+        result = subtractNumbers(num1, num2);
+        break;
+      case "x":
+        result = multiplyNumbers(num1, num2);
+        break;
+      case "/":
+        if (typeof divideNumbers(num1, num2) === "string")
+          msg = divideNumbers(num1, num2);
+        else result = divideNumbers(num1, num2);
+        break;
+      default:
+        msg = "There is no such operator";
+        break;
+    }
 
-  displayValue = result;
-  currentDisp1 = result;
-  if (!msg) displayOnScreen(displayValue);
-  else displayOnScreen(msg);
-  currentDisp2 = undefined;
-  operator = undefined;
-  console.log(`curr1: ${currentDisp1}, curr2: ${currentDisp2}`);
+    displayValue = result;
+    currentDisp1 = result;
+    if (!msg) displayOnScreen(displayValue);
+    else displayOnScreen(msg);
+    currentDisp2 = undefined;
+    operator = undefined;
+  }
 }
 
 function displayOnScreen(displayValue) {
